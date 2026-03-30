@@ -21,10 +21,27 @@ public_vars.estimated_pose = estimate_pose(public_vars); % (x,y,theta)
 % 12. Path planning
 public_vars.path = plan_path(read_only_vars, public_vars);
 
+%% ----Week2---Task2: sběr dat---- %
+% - For indoor map and LiDAR senzor - %
+if (read_only_vars.counter == 1)
+    public_vars.lidar_data = [];
+end
+
+if (read_only_vars.counter <= 100)
+    public_vars.lidar_data = [public_vars.lidar_data; read_only_vars.lidar_distances];
+end
+
+% - For outdoor map and GNSS senzor - %
+% if (read_only_vars.counter == 1)
+%      public_vars.gnss_data = [];
+% end
+% 
+% if (read_only_vars.counter <= 100)
+%     public_vars.gnss_data = [public_vars.gnss_data; read_only_vars.gnss_position];
+% end
+
+
 % 13. Plan next motion command
 public_vars = plan_motion(read_only_vars, public_vars);
-
-
-
 end
 
