@@ -19,17 +19,20 @@ public_vars.particles = update_particle_filter(read_only_vars, public_vars);
 public_vars.estimated_pose = estimate_pose(public_vars); % (x,y,theta)
 
 % 12. Path planning
-public_vars.path = plan_path(read_only_vars, public_vars);
+if read_only_vars.counter<2
+    public_vars.path = plan_path(read_only_vars, public_vars);
+end
+
 
 %% ----Week2---Task2: sběr dat---- %
 % - For indoor map and LiDAR senzor - %
-if (read_only_vars.counter == 1)
-    public_vars.lidar_data = [];
-end
-
-if (read_only_vars.counter <= 100)
-    public_vars.lidar_data = [public_vars.lidar_data; read_only_vars.lidar_distances];
-end
+% if (read_only_vars.counter == 1)
+%     public_vars.lidar_data = [];
+% end
+% 
+% if (read_only_vars.counter <= 100)
+%     public_vars.lidar_data = [public_vars.lidar_data; read_only_vars.lidar_distances];
+% end
 
 % - For outdoor map and GNSS senzor - %
 % if (read_only_vars.counter == 1)

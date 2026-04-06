@@ -1,30 +1,35 @@
 function [public_vars] = plan_motion(read_only_vars, public_vars)
 %PLAN_MOTION Summary of this function goes here
+XR = read_only_vars.mocap_pose(1);
+YR = read_only_vars.mocap_pose(2);
+thetaR = read_only_vars.mocap_pose(3);
+
+epsilon = 0.2;
+k = 1;
 
 % I. Pick navigation target
+[target, public_vars.path, finished] = get_target(read_only_vars.mocap_pose, public_vars.path);
 
-target = get_target(public_vars.estimated_pose, public_vars.path);
-
-
+if finished || isempty(target)
+    public_vars.motion_vector = [0, 0];
+    return;
+end
 % II. Compute motion vector
-if read_only_vars.counter < 100
-    public_vars.motion_vector = [0.5, 0.5];
+xP = XR + epsilon*cos(thetaR);
+yP = YR + epsilon*sin(thetaR);
 
-elseif read_only_vars.counter < 225
-    public_vars.motion_vector = [0.5, 0.55];
+dxP = k * (target(1) - xP);
+dyP = k * (target(2) - yP);
 
-elseif read_only_vars.counter < 300
-    public_vars.motion_vector = [0.5, 0.5];
+v = dxP*cos(thetaR) + dyP*sin(thetaR);
+u = (1/epsilon) * (-dxP*sin(thetaR) + dyP*cos(thetaR));
 
-elseif read_only_vars.counter < 375
-    public_vars.motion_vector = [0.55, 0.48];
+public_vars.motion_vector = kinematics(v, u);
 
-elseif read_only_vars.counter < 500
-    public_vars.motion_vector = [0.5, 0.5];
-else
-   public_vars.motion_vector = [0, 0];
 end
 
-
-
+function [wheel] = kinematics(v,u)
+wheelL=(2*v+u)/2;
+wheelR=(2*v-u)/2;
+wheel=[wheelL,wheelR];
 end
