@@ -16,7 +16,16 @@ public_vars.particles = update_particle_filter(read_only_vars, public_vars);
 [public_vars.mu, public_vars.sigma] = update_kalman_filter(read_only_vars, public_vars);
 
 % 11. Estimate current robot position
-public_vars.estimated_pose = estimate_pose(public_vars); % (x,y,theta)
+if (read_only_vars.counter == 1)
+    public_vars.estimated_poses = [];
+end
+
+public_vars.estimated_pose = estimate_pose(public_vars);
+
+if read_only_vars.counter > 20
+    public_vars.estimated_poses = [public_vars.estimated_poses; public_vars.estimated_pose];
+end
+
 
 % 12. Path planning
 if read_only_vars.counter<2

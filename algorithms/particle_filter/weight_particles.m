@@ -1,8 +1,11 @@
 function [weights] = weight_particles(particle_measurements, lidar_distances)
-%WEIGHT_PARTICLES Summary of this function goes here
+%WEIGHT_PARTICLES Compute particle weights based on lidar error
+lidar_distances = lidar_distances(:)';
 
-N = size(particle_measurements, 1);
-weights = ones(N,1) / N;
+error = sqrt(sum((particle_measurements - lidar_distances).^2, 2));
+
+weights = 1 ./ (error + 1e-6); % avoid division by zero
+
+weights = weights / sum(weights);
 
 end
-
