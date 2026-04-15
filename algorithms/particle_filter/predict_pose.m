@@ -10,9 +10,9 @@ y_new = old_pose(2) + v * sin(old_pose(3)) * dt;
 theta_new = old_pose(3) + w * dt;
 
 % Gaussian motion noise
-sigma_x = 0.015;
-sigma_y = 0.015;
-sigma_theta = 0.04;
+sigma_x = 0.05;
+sigma_y = 0.05;
+sigma_theta = 0.2;
 
 x_new = x_new + sigma_x * randn;
 y_new = y_new + sigma_y * randn;

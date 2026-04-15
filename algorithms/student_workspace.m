@@ -22,10 +22,6 @@ end
 
 public_vars.estimated_pose = estimate_pose(public_vars);
 
-if read_only_vars.counter > 20
-    public_vars.estimated_poses = [public_vars.estimated_poses; public_vars.estimated_pose];
-end
-
 
 % 12. Path planning
 if read_only_vars.counter<2

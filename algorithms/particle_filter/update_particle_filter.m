@@ -17,14 +17,5 @@ weights = weight_particles(measurements, read_only_vars.lidar_distances);
 
 % III. Resampling
 particles = resample_particles(particles, weights);
-
-m = size(particles,1);
-k = floor(0.01 * m);   % 1 %
-
-tmp = init_particle_filter(read_only_vars, public_vars);
-idx = randperm(m, k);
-particles(idx,:) = tmp.particles(1:k,:);
-
-
 end
 
