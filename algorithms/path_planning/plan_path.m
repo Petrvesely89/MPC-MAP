@@ -20,19 +20,19 @@ end
 function path = create_my_path_outdoor_1()
 
 % LINE
-[x1, y1] = generate_line([2, 2], [2, 5], 40);
+[x1, y1] = generate_line([2, 2], [2, 5], 15);
 
 % ARC
-[x2, y2] = generate_arc([2, 5], [5, 8], -1, 2.5, 60);
+[x2, y2] = generate_arc([2, 5], [5, 8], -1, 2.5, 25);
 
 % LINE
-[x3, y3] = generate_line([5, 8], [12, 8], 40);
+[x3, y3] = generate_line([5, 8], [12, 8], 20);
 
 % ARC
-[x4, y4] = generate_arc([12, 8], [16, 5], -1, 4, 60);
+[x4, y4] = generate_arc([12, 8], [16, 5], -1, 4, 25);
 
 % LINE
-[x5, y5] = generate_line([16, 5], [16, 2], 30);
+[x5, y5] = generate_line([16, 5], [16, 2], 12);
 
 
 

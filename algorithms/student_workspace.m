@@ -63,6 +63,9 @@ end
 
 
 % 13. Plan next motion command
-public_vars = plan_motion(read_only_vars, public_vars);
+if read_only_vars.counter < 50
+    public_vars.motion_vector = [0, 0];
+else
+    public_vars = plan_motion(read_only_vars, public_vars);
 end
 

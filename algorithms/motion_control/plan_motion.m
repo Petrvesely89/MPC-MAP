@@ -9,7 +9,7 @@ XR = public_vars.estimated_pose(1);
 YR = public_vars.estimated_pose(2);
 thetaR = public_vars.estimated_pose(3);
 
-epsilon = 0.2;
+epsilon = 0.3;
 k = 1;
 
 % I. Pick navigation target
