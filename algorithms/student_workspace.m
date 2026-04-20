@@ -1,19 +1,32 @@
 function [public_vars] = student_workspace(read_only_vars,public_vars)
 %STUDENT_WORKSPACE Summary of this function goes here
+public_vars.pf_enabled = 0;
+public_vars.kf_enabled = 1;
 
 % 8. Perform initialization procedure
-if (read_only_vars.counter == 1)
-          
-    public_vars = init_particle_filter(read_only_vars, public_vars);
-    public_vars = init_kalman_filter(read_only_vars, public_vars);
+if read_only_vars.counter == 1
+    if public_vars.pf_enabled
+        public_vars = init_particle_filter(read_only_vars, public_vars);
+    end
 
+    if public_vars.kf_enabled
+        public_vars = init_kalman_filter(read_only_vars, public_vars);
+    end
 end
 
 % 9. Update particle filter
-public_vars.particles = update_particle_filter(read_only_vars, public_vars);
+if public_vars.pf_enabled
+    public_vars.particles = update_particle_filter(read_only_vars, public_vars);
+end
 
 % 10. Update Kalman filter
-[public_vars.mu, public_vars.sigma] = update_kalman_filter(read_only_vars, public_vars);
+if public_vars.kf_enabled
+    [public_vars.mu, public_vars.sigma] = update_kalman_filter(read_only_vars, public_vars);
+end
+
+if read_only_vars.counter == 50
+    public_vars.kf.Q = cov(read_only_vars.gnss_history);
+end
 
 % 11. Estimate current robot position
 if (read_only_vars.counter == 1)
