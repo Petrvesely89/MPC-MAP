@@ -37,7 +37,10 @@ public_vars.estimated_pose = estimate_pose(public_vars);
 
 
 % 12. Path planning
-if read_only_vars.counter<2
+if public_vars.kf_enabled && read_only_vars.counter == 50
+    public_vars.path = plan_path(read_only_vars, public_vars);
+
+elseif public_vars.pf_enabled && read_only_vars.counter <2
     public_vars.path = plan_path(read_only_vars, public_vars);
 end
 
